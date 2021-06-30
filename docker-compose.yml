@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  reviews:
+    build: /home/bongobomba/hackreactor/SEC/SDC-Reviews
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - /home/bongobomba/hackreactor/SEC/SDC-Reviews:/src/app
+
+  database:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    volumes:
+      - /home/bongobomba/hackreactor/SEC/data/Raw:/raw
+      - /var/lib/postgresql/13/main:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: stinkoman6366
