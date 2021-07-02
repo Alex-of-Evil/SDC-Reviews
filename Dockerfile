@@ -8,7 +8,7 @@ RUN mkdir -p /src/app
 WORKDIR /src/app
 
 # What source code do you what to copy, and where to put it?
-COPY ./routes/ /src/app
+COPY . /src/app
 
 # Does your app have any dependencies that should be installed?
 RUN yarn install

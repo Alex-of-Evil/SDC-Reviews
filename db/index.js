@@ -1,26 +1,13 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: "postgres",
+  user: "ubuntu",
   password:"stinkoman6366",
-  host:"localhost",
+  host:"ec2-34-219-144-24.us-west-2.compute.amazonaws.com", //sdc-reviews_database_1
   port:5432,
   database:"review_api"
 });
 
-
-function poolQuery(queryString, input, callback) {
-  let result;
-  pool.query(queryString, (err, res) => {
-    if (err) {
-      console.log(err);
-    } else {
-      callback(res.rows, input);
-    }
-  })
-
-  return result;
-}
 /* pool.query("SELECT * FROM review limit(20)", (err, res) => {
   if (err) {
     console.log(err);

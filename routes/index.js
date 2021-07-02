@@ -15,6 +15,16 @@ app.use(morgan('dev'));
 })) */
 
 // k6
+app.get('/test', (req, res) => {
+  ;(async function() {
+    const client = await db.pool.connect();
+    const query = `INSERT INTO test (lastName) VALUES ('jack')`;
+
+    client.query(query);
+    client.release();
+    res.send(200);
+  })()
+})
 app.get('/reviews/:id', (req, res) => {
   ;(async function() {
     const client = await db.pool.connect();
@@ -39,10 +49,10 @@ app.get('/reviews/:id', (req, res) => {
       where product_id = '${req.params.id}'
     ) t`
     const reviewQuery = `SELECT * FROM review WHERE product_id='${req.params.id}'`;
-    const test = await client.query(query);
+    //const test = await client.query(query);
     //console.log(photo.rows);
-    // const resultsQuery = await client.query(reviewQuery);
-    /* const results = resultsQuery.rows;
+    const resultsQuery = await client.query(reviewQuery);
+    const results = resultsQuery.rows;
     for (var i = 0; i < results.length; i++) {
       let currentReviewId = results[i].id;
       //console.log(currentReviewId);
@@ -54,13 +64,13 @@ app.get('/reviews/:id', (req, res) => {
 
     }
     returnObj.results = results;
-    /* if (results.rows[0].array_agg !== null) {
+     /* if (results.rows[0].array_agg !== null) {
       returnObj.results = results.rows[0].array_agg;
       returnObj.count = results.rows[0].array_agg.length;
-    }
-    returnObj.count = results.length; */
+    } */
+    returnObj.count = results.length;
     client.release();
-    res.send(test.rows);
+    res.send(returnObj);
   })()
 })
 
@@ -265,3 +275,8 @@ order by 1; */
 
 /* WITH v1 AS (SELECT id FROM characteristics WHERE product_id='1')
 SELECT AVG(value) FROM characteristics_reviews, v1 WHERE characteristic_id = v1.id GROUP BY characteristic_id; */
+
+// - /home/bongobomba/hackreactor/SEC/SDC-Reviews/test.sql:/docker-entrypoint-initdb.d/test.sql
+
+/* - /home/bongobomba/hackreactor/SEC/data/Organized:/home/postgres
+      - /home/bongobomba/hackreactor/SEC/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d */
