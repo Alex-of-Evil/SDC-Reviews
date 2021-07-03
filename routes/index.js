@@ -260,6 +260,10 @@ app.get('/test/:id', (req, res) => {
     res.send(test3.rows[0].array_agg);
   })()
 })
+
+app.get('/loaderio-217058e9c50335fdf09938857373a795', (req, res) => {
+  res.send('loaderio-217058e9c50335fdf09938857373a795');
+})
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
